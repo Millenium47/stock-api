@@ -1,8 +1,12 @@
 package com.example.stockapi.service;
 
+import com.example.stockapi.enums.TimeSeriesType;
+import com.example.stockapi.model.StockDataModel;
+
+import java.util.ArrayList;
+
 public interface StockService {
-    String fetchTimeSeriesDaily(String symbol);
-    String fetchTimeSeriesIntraday(String symbol, String interval);
-    String fetchTimeSeriesWeekly(String symbol);
-    String fetchTimeSeriesMonthly(String symbol);
+    ArrayList<StockDataModel> fetchTimeSeries(String symbol, TimeSeriesType timeSeriesType);
+
+    ArrayList<StockDataModel> fetchTimeSeriesIntraday(String symbol, TimeSeriesType timeSeriesType, String interval);
 }
