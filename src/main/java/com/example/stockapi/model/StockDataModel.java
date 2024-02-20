@@ -1,10 +1,14 @@
 package com.example.stockapi.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class StockDataModel {
-    private String date;
-    private BigDecimal value;
+public class StockDataModel implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private final String date;
+    private final BigDecimal value;
 
     public StockDataModel(String date, BigDecimal value) {
         this.date = date;
@@ -15,15 +19,8 @@ public class StockDataModel {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
 }
