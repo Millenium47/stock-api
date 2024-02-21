@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 @Service(ApiProviders.ALPHA_VANTAGE)
@@ -36,8 +37,9 @@ public class AlphaServiceImpl implements StockService {
         this.apiKey = apiKey;
     }
 
+    @Override
     @Cacheable(value = "timeSeries", key = "#symbol.concat('-').concat(#timeSeriesType.getApiFunction())")
-    public ArrayList<StockDataModel> fetchTimeSeries(String symbol, TimeSeriesType timeSeriesType) {
+    public List<StockDataModel> fetchTimeSeries(String symbol, TimeSeriesType timeSeriesType) {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .queryParam("function", timeSeriesType.getApiFunction())
                 .queryParam("symbol", symbol)
@@ -48,9 +50,9 @@ public class AlphaServiceImpl implements StockService {
         return parseResponse(response.getBody(), timeSeriesType);
     }
 
-    ArrayList<StockDataModel> parseResponse(String responseBody, TimeSeriesType timeSeriesType) {
+    List<StockDataModel> parseResponse(String responseBody, TimeSeriesType timeSeriesType) {
         final String PARSED_VALUE = "4. close";
-        ArrayList<StockDataModel> response = new ArrayList<>();
+        List<StockDataModel> response = new ArrayList<>();
 
         JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
         // depends on fetch type

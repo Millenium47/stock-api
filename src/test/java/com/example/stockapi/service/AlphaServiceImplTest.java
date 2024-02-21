@@ -3,7 +3,6 @@ package com.example.stockapi.service;
 import com.example.stockapi.enums.TimeSeriesType;
 import com.example.stockapi.model.StockDataModel;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -14,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,12 +35,12 @@ class AlphaServiceImplTest {
                 .thenReturn(ResponseEntity.ok(expectedResponse));
 
         // action
-        ArrayList<StockDataModel> actualResponse = alphaService.fetchTimeSeries(symbol, TimeSeriesType.DAILY);
+        List<StockDataModel> actualResponse = alphaService.fetchTimeSeries(symbol, TimeSeriesType.DAILY);
 
         // assert
         assertNotNull(actualResponse);
         assertEquals(1, actualResponse.size());
-        assertEquals(new BigDecimal("123.45"), actualResponse.get(0).getValue());
+        assertEquals(new BigDecimal("123.45"), actualResponse.getFirst().getValue());
         verify(restTemplate).getForEntity(anyString(), eq(String.class));
     }
 
@@ -52,7 +51,7 @@ class AlphaServiceImplTest {
         AlphaServiceImpl service = new AlphaServiceImpl(null, null, null);
 
         // action
-        ArrayList<StockDataModel> result = service.parseResponse(jsonResponse, TimeSeriesType.DAILY);
+        List<StockDataModel> result = service.parseResponse(jsonResponse, TimeSeriesType.DAILY);
 
         // then
         assertEquals(2, result.size());

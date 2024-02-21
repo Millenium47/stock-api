@@ -3,8 +3,8 @@ package com.example.stockapi.service;
 import com.example.stockapi.enums.TimeSeriesType;
 import com.example.stockapi.model.StockDataModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface StockService {
-    ArrayList<StockDataModel> fetchTimeSeries(String symbol, TimeSeriesType timeSeriesType);
+    List<StockDataModel> fetchTimeSeries(String symbol, TimeSeriesType timeSeriesType);
 }
